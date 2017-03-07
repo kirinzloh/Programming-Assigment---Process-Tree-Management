@@ -3,11 +3,12 @@ import java.util.ArrayList;
 
 public class ProcessGraphNode {
 
-    //point to all the parents
-    private ArrayList<ProcessGraphNode> parents=new ArrayList<>();
-    //point to all the children
-    private ArrayList<ProcessGraphNode> children=new ArrayList<>();
-    //properties of ProcessGraphNode
+    // point to all the parents
+    private ArrayList<ProcessGraphNode> parents = new ArrayList<>();
+    // point to all the children
+    private ArrayList<ProcessGraphNode> children = new ArrayList<>();
+
+    // properties of ProcessGraphNode
     private int nodeId;
     private File inputFile;
     private File outputFile;
@@ -26,7 +27,7 @@ public class ProcessGraphNode {
         this.runnable = true;
     }
 
-    public void setNotRunable() {this.runnable = false;}
+    public void setNotRunnable() {this.runnable = false;}
 
     public void setExecuted() {
         this.executed = true;
@@ -87,13 +88,11 @@ public class ProcessGraphNode {
         return nodeId;
     }
 
+    // This method is not implemented as we have implemented a
+    // different way of checking if all nodes are executed
     public synchronized boolean allParentsExecuted(){
-        boolean ans=true;
-//        for (ProcessGraphNode child : this.getChildren()) {
-//            if (child.isExecuted()) {
-//                return false;
-//            }
-//        }
+        boolean ans = true;
+
         for (ProcessGraphNode parent:this.getParents()) {
             if (!parent.isExecuted())
                 ans=false;
