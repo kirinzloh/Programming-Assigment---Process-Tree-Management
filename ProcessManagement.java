@@ -30,6 +30,7 @@ public class ProcessManagement {
             count = 0;
             allExecuted = false;
 
+            System.out.println("Loading... Please be patient");
             // While all nodes are not executed, loop through the nodes
             while (allExecuted == false) {
                 for (ProcessGraphNode node : ProcessGraph.nodes) {
@@ -71,7 +72,7 @@ public class ProcessManagement {
             e.printStackTrace();
         }
 
-        System.out.println("All process finished successfully");
+        System.out.println("All processes finished successfully");
     }
 
     public static void ExecuteProcess(ProcessBuilder pb, ProcessGraphNode node) {
@@ -93,7 +94,6 @@ public class ProcessManagement {
 
             // Start process and wait for the process to finish before other processes can execute
             Process process = pb.start();
-            System.out.println("Loading... Please be patient");
             process.waitFor();
         } catch (Exception e) {
             e.printStackTrace();
