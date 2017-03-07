@@ -4,9 +4,10 @@
 
 -=-=-Purpose of program -=-=-
 
-The purpose of this program is to construct a directed acyclic graph (DAG) as
-the system to keep track of the flow of the programs. The user will then traverse 
-through this DAG in order to run the programs.
+The purpose of this program is to construct a directed acyclic graph (DAG) of 
+user programs from an input text file. The user will then traverse through this 
+DAG and execute the processes which have control and data dependencies between
+each other.
 
 
 
@@ -24,7 +25,19 @@ These test cases include:
 -> graph-file.txt
 -> graph-file1.txt
 
-4) Click run under ProcessManagement.java to start the program.
+4a) For IDE:
+Click run under ProcessManagement.java to start the program.
+
+4b) For Linux shell:
+- Change directory to where you placed the program using the "cd" command
+For example:
+$ cd "/home/osboxes/Documents/ProgAssignment1/src"
+
+- Compile the java file using the following command:
+$ javac ProcessManagement.java
+
+- Run the java file using the following command:
+$ java ProcessManagement
 
 
 
@@ -37,9 +50,10 @@ These test cases include:
 3) Each line in the input file represents a node. The line is of format:
 <program name with arguments :list of children ID's : input file : output file>
 
-4) We run each line by each line, which means we check each node.
-We check if the respective children of the node that is supposed to run 
-have finished running. 
+4) We recursively check each node to see if they have been executed. While all the
+nodes are still not executed, we check if the nodes are runnable. 
 
-5) If the children have finished running, that node is allowed to run.
+5) Execute the runnable nodes and repeat step 4 until all nodes are executed.
+
+
 
