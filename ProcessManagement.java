@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class ProcessManagement {
 
     //set the working directory
-    private static File currentDirectory = new File("/Users/weiqu/workspace/Software Construction/Programming Assigment");
+    private static File currentDirectory = new File("/home/osboxes/Documents/ProgAssignment1/src");
     //set the instructions file
     private static File instructionSet = new File("graph-file.txt");
     public static Object lock=new Object();
@@ -42,20 +42,12 @@ public class ProcessManagement {
 	        			}
 	        			if (i == children.size()){
 	        				node.setRunnable();
-	        				pb.redirectInput(node.getInputFile());
-	        				pb.redirectOutput(node.getOutputFile());
-	        				pb.command(node.getCommand());
-	        				Process process = pb.start();
-	        				process.waitFor();
+	        				ExecuteProcess(pb,node);
 	        				node.setExecuted();
 	        				count++;
 	        			}
 	        			else if (node.isRunnable()){
-	        				pb.redirectInput(node.getInputFile());
-	        				pb.redirectOutput(node.getOutputFile());
-	        				pb.command(node.getCommand());
-	        				Process process = pb.start();
-	        				process.waitFor();
+                            ExecuteProcess(pb,node);
 	        				node.setExecuted();
 	        				count++;
 	        			}
@@ -69,8 +61,36 @@ public class ProcessManagement {
         catch (Exception e){
         	e.printStackTrace();
         }
-
+	ProcessGraph.printGraph();
         System.out.println("All process finished successfully");
+    }
+
+    public static void ExecuteProcess(ProcessBuilder pb,ProcessGraphNode node){
+        try {
+		String input = node.getInputFile().toString();
+		String output = node.getOutputFile().toString();
+		if (input.equals("stdin")) {
+		    
+		}
+		else {
+		    pb.redirectInput(node.getInputFile());
+		}
+		if (output.equals("stdout")) {
+		    
+		}
+		else{
+		    pb.redirectOutput(node.getOutputFile());
+		}
+		String[] command = node.getCommand().split(" ");
+		pb.command(command);
+		Process process = pb.start();
+		process.waitFor();
+
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 }
