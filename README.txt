@@ -28,7 +28,7 @@ These test cases include:
 
 
 
--=-=-What exactly does the program do -=-=-
+-=-=-What exactly does the program do? -=-=-
 
 1) The user parses in a file to generate a ProcessGraph
 
@@ -37,9 +37,9 @@ These test cases include:
 3) Each line in the input file represents a node. The line is of format:
 <program name with arguments :list of children ID's : input file : output file>
 
-3) We run each line by each line, which means we check each node.
+4) We run each line by each line, which means we check each node.
 We check if the respective children of the node that is supposed to run 
 have finished running. 
 
-4) If the children have finished running, that node is allowed to run.
+5) If the children have finished running, that node is allowed to run.
 
