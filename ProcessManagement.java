@@ -45,7 +45,17 @@ public class ProcessManagement {
 	        				pb.redirectInput(node.getInputFile());
 	        				pb.redirectOutput(node.getOutputFile());
 	        				pb.command(node.getCommand());
-	        				pb.start();
+	        				Process process = pb.start();
+	        				process.waitFor();
+	        				node.setExecuted();
+	        				count++;
+	        			}
+	        			else if (node.isRunnable()){
+	        				pb.redirectInput(node.getInputFile());
+	        				pb.redirectOutput(node.getOutputFile());
+	        				pb.command(node.getCommand());
+	        				Process process = pb.start();
+	        				process.waitFor();
 	        				node.setExecuted();
 	        				count++;
 	        			}
