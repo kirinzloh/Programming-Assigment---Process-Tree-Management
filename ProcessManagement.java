@@ -11,11 +11,11 @@ public class ProcessManagement {
     private static File currentDirectory = new File("/home/osboxes/Documents/ProgAssignment1/src");
 
     // set the instructions file
-    private static File instructionSet = new File("graph-file.txt");
+    private static File instructionSet = new File("graph-file1.txt");
 
     private static int count;
     private static boolean allExecuted;
-    private static ArrayList<ProcessGraphNode> children;
+    private static ArrayList<ProcessGraphNode> parents;
 
     public static void main(String[] args) throws InterruptedException {
         // Parse the instruction file and construct a data structure, stored inside ProcessGraph class
@@ -27,10 +27,10 @@ public class ProcessManagement {
         // Using index of ProcessGraph, loop through each ProcessGraphNode, to check whether it is ready to run
         try {
             ProcessBuilder pb = new ProcessBuilder();
+	    pb.directory(currentDirectory);
             count = 0;
             allExecuted = false;
-
-            System.out.println("Loading... Please be patient");
+	System.out.println("Loading... Please be patient");
             // While all nodes are not executed, loop through the nodes
             while (allExecuted == false) {
                 for (ProcessGraphNode node : ProcessGraph.nodes) {
@@ -38,17 +38,17 @@ public class ProcessManagement {
                         count++;
                     }
                     else {
-                        children = node.getChildren();
+                        parents = node.getParents();
 
                         // int i is a counter to keep track of the number of child processes executed.
                         int i = 0;
-                        for (ProcessGraphNode child : children) {
-                            if (child.isExecuted()) {
+                        for (ProcessGraphNode parent : parents) {
+                            if (parent.isExecuted()) {
                                 i++;
                             }
                         }
                         // When all child processes are executed
-                        if (i == children.size()) {
+                        if (i == parents.size()) {
                             // mark the node as runnable
                             node.setRunnable();
                             // execute runnable node
@@ -72,7 +72,7 @@ public class ProcessManagement {
             e.printStackTrace();
         }
 
-        System.out.println("All processes finished successfully");
+        System.out.println("All process finished successfully");
     }
 
     public static void ExecuteProcess(ProcessBuilder pb, ProcessGraphNode node) {
@@ -89,7 +89,7 @@ public class ProcessManagement {
                 pb.redirectOutput(node.getOutputFile());
             }
             // Obtain program and arguments
-            String[] command = node.getCommand().split(" ");
+            String[] command = {"bash","-c",node.getCommand().toString()};
             pb.command(command);
 
             // Start process and wait for the process to finish before other processes can execute
